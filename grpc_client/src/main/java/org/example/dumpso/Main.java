@@ -25,7 +25,7 @@ public class Main {
     int jobs;
 
     Main(){
-        host = "192.168.11.106";
+        host = "192.168.11.142";
         port = 9091;
         channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().maxInboundMessageSize(Integer.MAX_VALUE).build();
         service = new GrpcService(channel);
@@ -33,8 +33,8 @@ public class Main {
         dumpWork = currentDir+"/dumpWork";
         System.out.println(dumpWork);
 
-        long  addr = 0x6e7b403000L;
-        long end = 0x6e7b5ee000L;
+        long addr = 0x6ed6c0e000L;
+        long end  = 0x6ed6df4000L;
 
         byte[] data = service.dumpMemByaddr(addr,end-addr);
 

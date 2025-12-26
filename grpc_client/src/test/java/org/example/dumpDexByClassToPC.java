@@ -3,7 +3,7 @@ package org.example;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
-public class dumpDexToPC {
+public class dumpDexByClassToPC {
 
     public static void main(String[] args) {
 
@@ -13,9 +13,7 @@ public class dumpDexToPC {
         int port = 9091;
         ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().maxInboundMessageSize(Integer.MAX_VALUE).build();
         GrpcService service = new GrpcService(channel);
-        service.OnlyDumpDexFile(dumpWork);
+        service.dumpDexByClass(dumpWork,"site.kos.loader.b");
 
     }
-
-
 }

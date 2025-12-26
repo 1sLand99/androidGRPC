@@ -117,5 +117,33 @@ public class GrpcService {
     }
 
 
+    public  void dumpDexByClass(String Dir,String cls_name){
+        DexClassLoaderInfo dexClassLoaderInfo = getClassLoaderInfo(cls_name);
+        if(dexClassLoaderInfo.getStatus()){
+            long[] CookieList = dexClassLoaderInfo.getValuesList().stream().mapToLong(Long::longValue).toArray();
+            for(int i = kDexFileIndexStart;i<CookieList.length;++i) {
+                long DexFile_Point = CookieList[i];
+                String file_name = Long.toHexString(DexFile_Point);
+                byte[] data = dexDumpByDexFilePoint(DexFile_Point);
+                saveDataFileToDir(Dir,file_name,data);
+            }
+        }else {
+            System.err.println(dexClassLoaderInfo.getMsg());
+        }
+    }
 
+
+    public void saveDataFileToDir(String Dir,String FileName,byte[] data) {
+
+        Path filePath = Paths.get(Dir, FileName); // 构建文件路径
+        try {
+            Files.createDirectories(filePath.getParent());
+            Files.write(filePath, data, StandardOpenOption.CREATE);
+            System.out.println("save file To path -> : "+filePath.toAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("save file error: " + filePath.toAbsolutePath());
+            System.err.println(" erroe: " + e.getMessage());
+        }
+
+    }
 }

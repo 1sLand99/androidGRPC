@@ -37,12 +37,12 @@ public class Main {
     static int port;
     int jobs;
     Main(){
-        host = "192.168.12.104";
+        host = "192.168.11.115";
         port = 9091;
 
         FileReader reader = null;
         try {
-            reader = new FileReader("D:\\androidGRPC\\grpc_client\\Filter.json");
+            reader = new FileReader("Filter.json");
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -51,8 +51,9 @@ public class Main {
         //        whileClassList = jsonObject.getJSONArray("whileClass");
         channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().maxInboundMessageSize(Integer.MAX_VALUE).build();
         service = new GrpcService(channel);
-        worDir = "D:\\apk\\dumpdex";
-        OutDexDir = worDir+"\\"+service.getCurrentPackageName();
+        String currentDir = System.getProperty("user.dir");
+        worDir = currentDir+"/dumpWork";
+        OutDexDir = worDir+"/"+service.getCurrentPackageName();
         jobs = 1;
 
 
@@ -72,7 +73,8 @@ public class Main {
     public  void dumpEntry() throws FileNotFoundException, InterruptedException {
 
 
-        dumpDexByClassAndFix(OutDexDir,"com.hepta.androidgrpc.AndroidClassLoaderInfo");
+        dumpDexByClassAndFix(OutDexDir,"com.yiwugou.goodsstore.GoodsStoreSearchActivity");
+//        dumpDexByClassAndFix(OutDexDir,"com.hepta.androidgrpc.AndroidClassLoaderInfo");
 //        dumpDexByClassAndFix(OutDexDir,"com.yunmai.valueoflife.MainActivity");
 //        dumpDexByClassAndFix(OutDexDir,"com.ccb.start.MainActivity");
 //        dumpWholeDexFileAndFix(OutDexDir);
